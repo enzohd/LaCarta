@@ -72,16 +72,14 @@ class PlatosFavoritosFragment : Fragment() {
      * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         fun onListFragmentInteraction(item: Plato)
     }
 
     companion object {
 
-        // TODO: Customize parameter argument names
         private val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         fun newInstance(columnCount: Int): PlatosFavoritosFragment {
             val fragment = PlatosFavoritosFragment()
             val args = Bundle()
