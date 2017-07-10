@@ -9,4 +9,10 @@
         android:name="com.mixturadesabores.junin.lacarta.view.PlatosView.PlatosFavoritosFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="com.mixturadesabores.junin.lacarta.view.PlatosView.CategoriaFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
