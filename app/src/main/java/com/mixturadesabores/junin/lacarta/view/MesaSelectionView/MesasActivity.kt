@@ -1,4 +1,4 @@
-package com.mixturadesabores.junin.lacarta.view
+package com.mixturadesabores.junin.lacarta.view.MesaSelectionView
 
 
 import android.app.Activity
@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 
 import com.mixturadesabores.junin.lacarta.R
+import com.mixturadesabores.junin.lacarta.view.MesaSelectionView.NivelesPagerAdapter
 
 class MesasActivity : Activity(), ActionBar.TabListener {
 

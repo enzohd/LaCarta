@@ -1,4 +1,4 @@
-package com.mixturadesabores.junin.lacarta.view
+package com.mixturadesabores.junin.lacarta.view.MesaSelectionView
 
 import android.content.Context
 import android.view.LayoutInflater

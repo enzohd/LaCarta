@@ -1,4 +1,4 @@
-package com.mixturadesabores.junin.lacarta.view
+package com.mixturadesabores.junin.lacarta.view.MesaSelectionView
 
 import android.app.Fragment
 import android.content.Context
@@ -7,8 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
-import android.widget.TextView
-import com.mixturadesabores.junin.domain.entities.Mesa
 import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.R
 

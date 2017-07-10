@@ -1,4 +1,4 @@
-package com.mixturadesabores.junin.lacarta.view
+package com.mixturadesabores.junin.lacarta.view.MesaSelectionView
 
 import android.app.Fragment
 import android.app.FragmentManager
@@ -7,6 +7,7 @@ import android.support.v13.app.FragmentPagerAdapter
 import com.mixturadesabores.junin.domain.interactors.ObtenerNivelesUseCase
 import com.mixturadesabores.junin.lacarta.data.ApiNivelRepository
 import com.mixturadesabores.junin.domain.entities.Nivel
+import com.mixturadesabores.junin.lacarta.view.MesaSelectionView.NivelPageFragment
 
 /**
  * Created by enzo on 08/07/17.
