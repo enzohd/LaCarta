@@ -5,18 +5,10 @@ import android.app.Activity
 import android.app.ActionBar
 import android.app.FragmentTransaction
 
-import android.app.Fragment
-import android.app.FragmentManager
-import android.support.v13.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-
-import android.widget.TextView
 
 import com.mixturadesabores.junin.lacarta.R
 
@@ -30,7 +22,7 @@ class MesasActivity : Activity(), ActionBar.TabListener {
         setContentView(R.layout.activity_mesas)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mNivelesPagerAdapter = NivelesPagerAdapter(fragmentManager)
+        mNivelesPagerAdapter = NivelesPagerAdapter(this, fragmentManager)
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.container) as ViewPager
