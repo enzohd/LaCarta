@@ -9,4 +9,6 @@
     <string name="title_activity_order">Detalle de Pedido</string>
     <string name="title_activity_platos">Platos</string>
     <string name="money_sign">S/.</string>
+    <string name="total_tag">Total</string>
+    <string name="hour_tag">Hora:</string>
 </resources>
