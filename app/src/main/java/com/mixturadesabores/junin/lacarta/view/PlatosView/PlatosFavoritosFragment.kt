@@ -10,15 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mixturadesabores.junin.lacarta.R
-import com.mixturadesabores.junin.domain.interactors.ObtenerPlatosFavoritosUseCase
 import com.mixturadesabores.junin.domain.entities.Plato
+import com.mixturadesabores.junin.domain.interactors.ObtenerPlatosFrecuentesUseCase
 import com.mixturadesabores.junin.lacarta.data.ApiPlatoRepository
+import io.reactivex.schedulers.Schedulers
 
 
 class PlatosFavoritosFragment : Fragment() {
 
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
+    private val apiPlatoRepository by lazy { ApiPlatoRepository() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,6 @@ class PlatosFavoritosFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_platos_favoritos_list, container, false)
-        val platosFavoritos = ObtenerPlatosFavoritosUseCase(ApiPlatoRepository()).execute()
 
         // Set the adapter
         if (view is RecyclerView) {
@@ -42,7 +43,14 @@ class PlatosFavoritosFragment : Fragment() {
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            recyclerView.adapter = MyPlatoFavoritoRecyclerViewAdapter(platosFavoritos, mListener)
+
+            val suscription = ObtenerPlatosFrecuentesUseCase(apiPlatoRepository).execute()
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(
+                            {
+                                platos -> recyclerView.adapter = MyPlatoFavoritoRecyclerViewAdapter(platos, mListener)
+                            }
+                    )
         }
         return view
     }

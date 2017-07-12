@@ -12,12 +12,15 @@ import android.view.ViewGroup
 
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.domain.entities.Categoria
+import com.mixturadesabores.junin.domain.interactors.ObtenerListadoCategoriasUseCase
 import com.mixturadesabores.junin.lacarta.data.ApiCategoriaRepository
+import io.reactivex.schedulers.Schedulers
 
 
 class CategoriaFragment : Fragment() {
     private var mColumnCount = 3
     private var mListener: OnListFragmentInteractionListener? = null
+    private val apiCategoriaRepository by lazy { ApiCategoriaRepository() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,14 @@ class CategoriaFragment : Fragment() {
             } else {
                 recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
             }
-            recyclerView.adapter = MyCategoriaRecyclerViewAdapter(Categoria.ObtenerCategorias(ApiCategoriaRepository()), mListener)
+
+            val suscription = ObtenerListadoCategoriasUseCase(apiCategoriaRepository).execute()
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(
+                            {
+                                categorias -> recyclerView.adapter = MyCategoriaRecyclerViewAdapter(categorias, mListener)
+                            }
+                    )
         }
         return view
     }

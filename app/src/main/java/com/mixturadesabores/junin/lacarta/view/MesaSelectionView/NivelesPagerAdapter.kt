@@ -8,6 +8,7 @@ import com.mixturadesabores.junin.domain.interactors.ObtenerNivelesUseCase
 import com.mixturadesabores.junin.lacarta.data.ApiNivelRepository
 import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.view.MesaSelectionView.NivelPageFragment
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by enzo on 08/07/17.
@@ -15,7 +16,16 @@ import com.mixturadesabores.junin.lacarta.view.MesaSelectionView.NivelPageFragme
 class NivelesPagerAdapter(context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     var context: Context = context
-    private var niveles: List<Nivel> = ObtenerNivelesUseCase(ApiNivelRepository()).execute()
+    val apiNivelRepository by lazy { ApiNivelRepository() }
+    var niveles = mutableListOf<Nivel>()
+    val suscription = ObtenerNivelesUseCase(apiNivelRepository).execute()
+            .subscribeOn(Schedulers.io())
+            .subscribe(
+                    { res ->
+                        niveles = res.toMutableList()
+                        this.notifyDataSetChanged()
+                    }
+            )
 
     override fun getItem(position: Int): Fragment {
         // getItem is called to instantiate the fragment for the given page.
@@ -30,5 +40,9 @@ class NivelesPagerAdapter(context: Context, fm: FragmentManager) : FragmentPager
 
     override fun getPageTitle(position: Int): CharSequence? {
         return "Nivel " + niveles[position].piso.toString()
+    }
+
+    override fun notifyDataSetChanged() {
+        super.notifyDataSetChanged()
     }
 }
