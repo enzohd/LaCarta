@@ -13,8 +13,8 @@ class ApiNivelRepository: NivelRepository {
     override fun getAll(): Observable<List<Nivel>> {
         return Observable.create { subscriber ->
             val niveles = mutableListOf<Nivel>()
-            niveles.add(Nivel(1, nMesas = 6))
-            niveles.add(Nivel(2, mutableListOf<Mesa>(Mesa(1, "Ocupado"), Mesa(2, "Libre"))))
+            niveles.add(Nivel(1, 1, nMesas = 6))
+            niveles.add(Nivel(2, 2, mutableListOf<Mesa>(Mesa(1, 1, "Ocupado"), Mesa(2, 2, "Libre"))))
             subscriber.onNext(niveles)
             subscriber.onComplete()
         }

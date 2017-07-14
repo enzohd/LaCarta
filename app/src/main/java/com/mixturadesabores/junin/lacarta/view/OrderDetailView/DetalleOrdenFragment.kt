@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.mixturadesabores.junin.domain.entities.DetalleOrden
+import com.mixturadesabores.junin.domain.entities.Mesa
 
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.domain.entities.Orden
@@ -30,7 +31,7 @@ class DetalleOrdenFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_detalleorden_list, container, false)
-        var orden: Orden = Orden()
+        var orden: Orden = Orden(Mesa(1, 1, "Libre"))
         // Set the adapter
         if (view is RecyclerView) {
             val context = view.getContext()
