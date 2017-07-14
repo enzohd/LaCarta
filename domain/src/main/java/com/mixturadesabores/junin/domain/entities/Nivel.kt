@@ -1,6 +1,5 @@
 package com.mixturadesabores.junin.domain.entities
 
-import javafx.scene.Parent
 
 /**
  * Created by enzo on 04/07/17.
