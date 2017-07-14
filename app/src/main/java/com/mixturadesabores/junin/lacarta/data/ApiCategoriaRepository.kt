@@ -12,12 +12,12 @@ class ApiCategoriaRepository: RestApi(), CategoriaRepository {
     override fun getAll(): Observable<List<Categoria>> {
         return Observable.create { subscriber ->
             val categorias = mutableListOf<Categoria>()
-            categorias.add(Categoria("Pollos"))
-            categorias.add(Categoria("Pescados"))
-            categorias.add(Categoria("Chifa"))
-            categorias.add(Categoria("Menu"))
-            categorias.add(Categoria("Extra"))
-            categorias.add(Categoria("Postres"))
+            categorias.add(Categoria(1, "Pollos"))
+            categorias.add(Categoria(2, "Pescados"))
+            categorias.add(Categoria(3, "Chifa"))
+            categorias.add(Categoria(4, "Menu"))
+            categorias.add(Categoria(5, "Extra"))
+            categorias.add(Categoria(6, "Postres"))
             subscriber.onNext(categorias)
             subscriber.onComplete()
         }
