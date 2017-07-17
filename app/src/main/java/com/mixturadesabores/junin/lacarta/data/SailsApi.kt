@@ -1,6 +1,7 @@
 package com.mixturadesabores.junin.lacarta.data
 
 import com.mixturadesabores.junin.domain.entities.Plato
+import com.mixturadesabores.junin.lacarta.data.models.PlatoOfCartaApi
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -9,6 +10,6 @@ import retrofit2.http.GET
  */
 interface SailsApi {
 
-    @GET("/platos")
-    fun getFavoritePlates(): Call<Plato>
+    @GET("/carta")
+    fun getFavoritePlates(): Call<List<PlatoOfCartaApi>>
 }

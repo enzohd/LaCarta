@@ -49,6 +49,9 @@ class PlatosFavoritosFragment : Fragment() {
                     .subscribe(
                             {
                                 platos -> recyclerView.adapter = MyPlatoFavoritoRecyclerViewAdapter(platos, mListener)
+                            },
+                            {
+                                error -> Throwable(error.message)
                             }
                     )
         }

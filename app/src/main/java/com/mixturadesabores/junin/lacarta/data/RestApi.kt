@@ -12,7 +12,7 @@ open class RestApi() {
 
     init {
         val retrofit = Retrofit.Builder()
-                .baseUrl("http://comodo.com")
+                .baseUrl("http://192.168.1.39:1337/")
                 .addConverterFactory(MoshiConverterFactory.create())
                 .build()
 
