@@ -49,10 +49,10 @@ class MesaAdapter(var context: Context, var nivel: Nivel): BaseAdapter() {
             button = convertView as Button
         }
         button.text = mesa.numero.toString()
-        if (mesa.estado == "Libre") {
+        if (mesa.estado == "libre") {
             button.setBackgroundColor(Color.GREEN)
             button.setOnClickListener { l -> context.startActivity(Intent(context, PlatosActivity::class.java)) }
-        } else if (mesa.estado == "Ocupado") {
+        } else if (mesa.estado == "ocupada") {
             button.setBackgroundColor(Color.YELLOW)
             button.setOnClickListener { l -> context.startActivity(Intent(context, OrderActivity::class.java)) }
         }

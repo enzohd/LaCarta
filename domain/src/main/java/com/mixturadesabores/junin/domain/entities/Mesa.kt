@@ -9,16 +9,16 @@ import com.mixturadesabores.junin.domain.exceptions.FreeTableException
 class Mesa(val id: Int, val numero: Int, var estado:String) {
 
     fun liberar() {
-        if (estado == "Ocupada") {
-            estado = "Libre"
+        if (estado == "ocupada") {
+            estado = "libre"
         } else {
             throw FreeTableException("The table is libre already")
         }
     }
 
     fun ocupar() {
-        if (estado == "Libre") {
-            estado = "Ocupada"
+        if (estado == "libre") {
+            estado = "ocupada"
         } else {
             throw BusyTableException("The table is busy already")
         }

@@ -2,6 +2,7 @@ package com.mixturadesabores.junin.lacarta.data
 
 import com.mixturadesabores.junin.lacarta.data.models.PlatoOfCartaApi
 import com.mixturadesabores.junin.lacarta.data.models.CategoriaApi
+import com.mixturadesabores.junin.lacarta.data.models.MesaApi
 import retrofit2.Call
 import retrofit2.http.GET
 
@@ -15,4 +16,7 @@ interface SailsApi {
 
     @GET("/categoria")
     fun getCategories(): Call<List<CategoriaApi>>
+
+    @GET("/mesa")
+    fun getTables(): Call<List<MesaApi>>
 }
