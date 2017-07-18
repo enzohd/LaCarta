@@ -49,6 +49,9 @@ class CategoriaFragment : Fragment() {
                     .subscribe(
                             {
                                 categorias -> recyclerView.adapter = MyCategoriaRecyclerViewAdapter(categorias, mListener)
+                            },
+                            {
+                                error -> Throwable(error.message)
                             }
                     )
         }

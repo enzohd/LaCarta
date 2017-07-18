@@ -17,15 +17,9 @@ class PlatoDataMapper {
                 platoOfCartaApi.cantidad - platoOfCartaApi.reserva)
     }
 
-    /*fun transformEntityToApi(plato: Plato): PlatoApi {
-        return PlatoApi()
-    }*/
-
     fun transformApiToEntity(platos: List<PlatoOfCartaApi>): List<Plato> {
         var platosList = mutableListOf<Plato>()
-        for (item in platos) {
-            platosList.add(transformApiToEntity(item))
-        }
+        platos.map { platosList.add(transformApiToEntity(it)) }
         return platosList.toList()
     }
 }
