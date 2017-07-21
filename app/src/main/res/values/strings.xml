@@ -1,14 +1,14 @@
 <resources>
     <string name="app_name">La Carta</string>
-    <string name="title_activity_mesas">Mesas</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Numero de mesas: %1$d</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <string name="tab_text_3">Tab 3</string>
+    <string name="title_activity_mesas">Selección de mesa</string>
+    <string name="action_settings">Opciones</string>
+    <string name="section_format">Número de mesas: %1$d</string>
     <string name="title_activity_order">Detalle de Pedido</string>
     <string name="title_activity_platos">Platos</string>
     <string name="money_sign">S/.</string>
     <string name="total_tag">Total</string>
-    <string name="hour_tag">Hora:</string>
+    <string name="hour_tag">Hora</string>
+    <string name="quantity_tag">Cantidad</string>
+    <string name="alert_dialog_ok">Aceptar</string>
+    <string name="alert_dialog_cancel">Cancelar</string>
 </resources>

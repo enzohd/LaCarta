@@ -1,5 +1,6 @@
 package com.mixturadesabores.junin.lacarta.view.PlatosView
 
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.app.Fragment
@@ -35,36 +36,44 @@ class PlatosFavoritosFragment : Fragment() {
         val view = inflater!!.inflate(R.layout.fragment_platos_favoritos_list, container, false)
 
         // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            val recyclerView = view
-            if (mColumnCount <= 1) {
-                recyclerView.layoutManager = LinearLayoutManager(context)
-            } else {
-                recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
-            }
-
-            val suscription = ObtenerPlatosFrecuentesUseCase(apiPlatoRepository).execute()
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(
-                            {
-                                platos -> recyclerView.adapter = MyPlatoFavoritoRecyclerViewAdapter(platos, mListener)
-                            },
-                            {
-                                error -> Throwable(error.message)
+        val suscription = ObtenerPlatosFrecuentesUseCase(apiPlatoRepository).execute()
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                        {
+                            if (view is RecyclerView) {
+                                val context = view.getContext()
+                                val recyclerView = view
+                                if (mColumnCount <= 1) {
+                                    recyclerView.layoutManager = LinearLayoutManager(context)
+                                } else {
+                                    recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
+                                }
+                                recyclerView.adapter = MyPlatoFavoritoRecyclerViewAdapter(it, mListener)
                             }
-                    )
-        }
+                        },
+                        {
+                            error -> Throwable(error.message)
+                        }
+                )
         return view
     }
 
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        if (context is OnListFragmentInteractionListener) {
+        if (context is PlatosFavoritosFragment.OnListFragmentInteractionListener) {
             mListener = context
         } else {
             throw RuntimeException(context!!.toString() + " must implement OnListFragmentInteractionListener")
+        }
+    }
+
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        if (activity is PlatosFavoritosFragment.OnListFragmentInteractionListener) {
+            mListener = activity
+        } else {
+            throw RuntimeException(activity!!.toString() + " must implement OnListFragmentInteractionListener")
         }
     }
 

@@ -9,8 +9,9 @@ import com.mixturadesabores.junin.domain.interactors.ObtenerNivelesUseCase
 import com.mixturadesabores.junin.lacarta.data.ApiNivelRepository
 import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.view.MesaSelectionView.NivelPageFragment
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import android.util.Log
+
 /**
  * Created by enzo on 08/07/17.
  */
@@ -21,15 +22,14 @@ class NivelesPagerAdapter(context: Context, fm: FragmentManager) : FragmentPager
     var niveles = mutableListOf<Nivel>()
     val suscription = ObtenerNivelesUseCase(apiNivelRepository).execute()
             .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
-                    { res ->
-                        niveles = res.toMutableList()
-                        Log.v("numero de niveles", niveles.size.toString())
+                    {
+                        niveles = it.toMutableList()
                         this.notifyDataSetChanged()
                     },
-                    {error ->
-                        this.notifyDataSetChanged()
-                        Throwable(error.message)
+                    {
+                        Throwable(it.message)
                     }
             )
 

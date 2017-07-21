@@ -24,9 +24,9 @@ class MyPlatoFavoritoRecyclerViewAdapter(private val mValues: List<Plato>, priva
         holder.mNameView.text = mValues[position].nombre
         holder.mPriceView.text = mValues[position].precio.toString()
 
-        /*holder.mView.setOnClickListener {
-            mListener?.onListFragmentInteraction(holder.mItem)
-        }*/
+        holder.mView.setOnClickListener {
+            mListener?.onListFragmentInteraction(mValues.get(position))
+        }
     }
 
     override fun getItemCount(): Int {

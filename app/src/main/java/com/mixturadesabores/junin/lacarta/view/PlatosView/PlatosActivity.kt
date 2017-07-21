@@ -11,7 +11,8 @@ import kotlinx.android.synthetic.main.activity_platos.*
 class PlatosActivity : Activity(), PlatosFavoritosFragment.OnListFragmentInteractionListener, CategoriaFragment.OnListFragmentInteractionListener {
 
     override fun onListFragmentInteraction(item: Plato) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val newDialog = PlatoSelectedDialogFragment.newInstance(item.nombre)
+        newDialog.show(fragmentManager, "dialog")
     }
 
     override fun onListFragmentInteraction(item: Categoria) {

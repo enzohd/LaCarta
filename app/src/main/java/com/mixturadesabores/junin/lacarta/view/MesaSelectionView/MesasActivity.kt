@@ -42,7 +42,6 @@ class MesasActivity : Activity(), ActionBar.TabListener {
             }
         })
 
-        // For each of the sections in the app, add a tab to the action bar.
         for (i in 0..mNivelesPagerAdapter!!.count - 1) {
             // Create a tab with text corresponding to the page title defined by
             // the adapter. Also specify this Activity object, which implements
@@ -53,7 +52,6 @@ class MesasActivity : Activity(), ActionBar.TabListener {
                             .setText(mNivelesPagerAdapter!!.getPageTitle(i))
                             .setTabListener(this))
         }
-
     }
 
 

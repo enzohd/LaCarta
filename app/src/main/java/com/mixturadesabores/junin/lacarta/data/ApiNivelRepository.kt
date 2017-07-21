@@ -25,6 +25,12 @@ class ApiNivelRepository: RestApi(), NivelRepository {
             } else {
                 subscriber.onError(Throwable(response.message()))
             }
+
+            /*var niveles = mutableListOf<Nivel>()
+            niveles.add(Nivel(1, 1, mutableListOf<Mesa>(Mesa(1, 1, "libre"),
+                    Mesa(2, 2, "ocupada"))))
+            subscriber.onNext(niveles)
+            subscriber.onComplete()*/
         }
     }
 }
