@@ -4,9 +4,7 @@ import com.mixturadesabores.junin.domain.entities.Mesa
 import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.data.models.MesaApi
 
-/**
- * Created by enzo on 18/07/17.
- */
+
 class NivelDataMapper {
 
     fun transformApiToEntity(mesasApi: List<MesaApi>): List<Nivel> {

@@ -1,8 +1,6 @@
 package com.mixturadesabores.junin.lacarta.data.models
 
-/**
- * Created by enzo on 18/07/17.
- */
+
 class MesaApi(val pedido: List<PedidoApi>,
               val nombre: String,
               val estado: String,
@@ -12,6 +10,6 @@ class MesaApi(val pedido: List<PedidoApi>,
               val updatedAt: String) {
 
     fun getLevelId(): Int {
-        return ubicacion.last().toInt()
+        return ubicacion.last().toInt() - 48
     }
 }

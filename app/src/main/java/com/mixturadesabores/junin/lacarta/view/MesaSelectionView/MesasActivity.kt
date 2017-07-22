@@ -9,49 +9,54 @@ import android.support.v4.view.ViewPager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.mixturadesabores.junin.domain.entities.Nivel
+import com.mixturadesabores.junin.domain.interactors.ObtenerNivelesUseCase
 
 import com.mixturadesabores.junin.lacarta.R
+import com.mixturadesabores.junin.lacarta.data.ApiNivelRepository
 import com.mixturadesabores.junin.lacarta.view.MesaSelectionView.NivelesPagerAdapter
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MesasActivity : Activity(), ActionBar.TabListener {
 
-    private var mNivelesPagerAdapter: NivelesPagerAdapter? = null
-    private var mViewPager: ViewPager? = null
+    private var levelsPagerAdapter: NivelesPagerAdapter? = null
+    private var viewPager: ViewPager? = null
+    private var levels: List<Nivel>? = null
+    private val apiNivelRepository by lazy { ApiNivelRepository() }
+    private val obtenerNivelesUseCase by lazy { ObtenerNivelesUseCase(apiNivelRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mesas)
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mNivelesPagerAdapter = NivelesPagerAdapter(this, fragmentManager)
 
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = findViewById(R.id.container) as ViewPager
-        mViewPager!!.adapter = mNivelesPagerAdapter
-
-        // Set up the action bar.
         val actionBar = actionBar
         actionBar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
 
-        // When swiping between different sections, select the corresponding
-        // tab. We can also use ActionBar.Tab#select() to do this if we have
-        // a reference to the Tab.
-        mViewPager!!.setOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-            override fun onPageSelected(position: Int) {
-                actionBar.setSelectedNavigationItem(position)
-            }
-        })
+        val suscription = obtenerNivelesUseCase.execute()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        {
+                            levelsPagerAdapter = NivelesPagerAdapter(fragmentManager, it)
+                            viewPager = findViewById(R.id.container) as ViewPager
+                            viewPager!!.adapter = levelsPagerAdapter
 
-        for (i in 0..mNivelesPagerAdapter!!.count - 1) {
-            // Create a tab with text corresponding to the page title defined by
-            // the adapter. Also specify this Activity object, which implements
-            // the TabListener interface, as the callback (listener) for when
-            // this tab is selected.
-            actionBar.addTab(
-                    actionBar.newTab()
-                            .setText(mNivelesPagerAdapter!!.getPageTitle(i))
-                            .setTabListener(this))
-        }
+                            viewPager!!.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
+                                override fun onPageSelected(position: Int) {
+                                    actionBar.setSelectedNavigationItem(position)
+                                }
+                            })
+
+                            for (i in 0..levelsPagerAdapter!!.count - 1) {
+                                actionBar.addTab(
+                                        actionBar.newTab()
+                                                .setText(levelsPagerAdapter!!.getPageTitle(i))
+                                                .setTabListener(this)
+                                )
+                            }
+                        }
+                )
     }
 
 
@@ -78,7 +83,7 @@ class MesasActivity : Activity(), ActionBar.TabListener {
     override fun onTabSelected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
-        mViewPager!!.currentItem = tab.position
+        viewPager!!.currentItem = tab.position
     }
 
     override fun onTabUnselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}

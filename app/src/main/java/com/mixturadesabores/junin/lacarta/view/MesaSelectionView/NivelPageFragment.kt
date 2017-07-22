@@ -1,5 +1,6 @@
 package com.mixturadesabores.junin.lacarta.view.MesaSelectionView
 
+import android.annotation.SuppressLint
 import android.app.Fragment
 import android.content.Context
 import android.content.Intent
@@ -14,16 +15,14 @@ import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivity
 
-/**
- * Created by enzo on 08/07/17.
- */
-class NivelPageFragment(var aContext: Context, var nivel: Nivel): Fragment() {
+@SuppressLint("ValidFragment")
+class NivelPageFragment(var nivel: Nivel): Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_mesas, container, false)
         val gridview = rootView.findViewById(R.id.gridview_mesas) as GridView
-        gridview.adapter = MesaAdapter(aContext, nivel)
+        gridview.adapter = MesaAdapter(activity, nivel)
         return rootView
     }
 
@@ -38,8 +37,8 @@ class NivelPageFragment(var aContext: Context, var nivel: Nivel): Fragment() {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        fun newInstance(context: Context, sectionNumber: Int, nivel: Nivel): NivelPageFragment {
-            val fragment = NivelPageFragment(context, nivel)
+        fun newInstance(sectionNumber: Int, nivel: Nivel): NivelPageFragment {
+            val fragment = NivelPageFragment(nivel)
             val args = Bundle()
             args.putInt(ARG_SECTION_NUMBER, sectionNumber)
             fragment.arguments = args
