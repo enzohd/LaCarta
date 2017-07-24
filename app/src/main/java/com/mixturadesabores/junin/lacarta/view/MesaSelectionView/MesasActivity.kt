@@ -15,7 +15,6 @@ import com.mixturadesabores.junin.domain.interactors.ObtenerNivelesUseCase
 
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.data.ApiNivelRepository
-import com.mixturadesabores.junin.lacarta.view.MesaSelectionView.NivelesPagerAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -23,7 +22,6 @@ class MesasActivity : Activity(), ActionBar.TabListener {
 
     private var levelsPagerAdapter: NivelesPagerAdapter? = null
     private var viewPager: ViewPager? = null
-    private var levels: List<Nivel>? = null
     private val apiNivelRepository by lazy { ApiNivelRepository() }
     private val obtenerNivelesUseCase by lazy { ObtenerNivelesUseCase(apiNivelRepository) }
 
@@ -34,7 +32,7 @@ class MesasActivity : Activity(), ActionBar.TabListener {
         val actionBar = actionBar
         actionBar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
 
-        val suscription = obtenerNivelesUseCase.execute()
+        obtenerNivelesUseCase.execute()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -52,7 +50,7 @@ class MesasActivity : Activity(), ActionBar.TabListener {
                             for (i in 0..levelsPagerAdapter!!.count - 1) {
                                 actionBar.addTab(
                                         actionBar.newTab()
-                                                .setText(levelsPagerAdapter!!.getPageTitle(i))
+                                                .setText(getString(R.string.tab_level_title) + levelsPagerAdapter!!.getPageTitle(i))
                                                 .setTabListener(this)
                                 )
                             }

@@ -19,7 +19,7 @@ class NivelesPagerAdapter(fm: FragmentManager, var levels: List<Nivel>) : Fragme
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return "Nivel " + levels[position].piso.toString()
+        return levels[position].piso.toString()
     }
 
     override fun notifyDataSetChanged() {

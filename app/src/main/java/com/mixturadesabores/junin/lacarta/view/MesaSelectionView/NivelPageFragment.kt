@@ -22,7 +22,7 @@ class NivelPageFragment(var nivel: Nivel): Fragment() {
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_mesas, container, false)
         val gridview = rootView.findViewById(R.id.gridview_mesas) as GridView
-        gridview.adapter = MesaAdapter(activity, nivel)
+        gridview.adapter = MesaAdapter(activity, nivel.mesas)
         return rootView
     }
 
