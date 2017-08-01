@@ -15,7 +15,7 @@ class NivelDataMapper {
 
         levels.addAll(levelsApi.map { level -> Nivel(level, level, mesasApi
                 .filter { it.getLevelId() == level }
-                .map { mesa -> Mesa(mesa.id, mesa.id, mesa.estado) }
+                .map { mesa -> Mesa(mesa.id, mesa.id, mesa.estado, null) }
                 .toMutableList())
         })
 
