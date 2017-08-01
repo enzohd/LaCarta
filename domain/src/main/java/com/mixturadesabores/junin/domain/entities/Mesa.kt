@@ -1,26 +1,46 @@
 package com.mixturadesabores.junin.domain.entities
 
-import com.mixturadesabores.junin.domain.exceptions.BusyTableException
-import com.mixturadesabores.junin.domain.exceptions.FreeTableException
+class Mesa(val id: Int, val numero: Int, var estado: String, var orden: Orden?) {
 
-/**
- * Created by enzo on 02/07/17.
- */
-class Mesa(val id: Int, val numero: Int, var estado:String) {
+    private val estados = listOf<String>("libre", "ocupada")
+
+    init {
+        if (!estados.contains(estado)) {
+            throw Exception("Estado de mesa no valido")
+        }
+    }
 
     fun liberar() {
         if (estado == "ocupada") {
             estado = "libre"
+            orden = null
         } else {
-            throw FreeTableException("The table is libre already")
+            throw Exception("La mesa ya esta libre")
         }
     }
 
-    fun ocupar() {
+    fun ocupar(orden: Orden) {
         if (estado == "libre") {
             estado = "ocupada"
+            this.orden = orden
         } else {
-            throw BusyTableException("The table is busy already")
+            throw Exception("La mesa ya esta ocupada")
+        }
+    }
+
+    fun estaOcupado(): Boolean {
+        if (estado == "ocupada") {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    fun estaLibre(): Boolean {
+        if (estado == "libre") {
+            return true
+        } else {
+            return false
         }
     }
 }

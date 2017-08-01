@@ -1,41 +1,42 @@
 package com.mixturadesabores.junin.domain.entities
 
-import com.mixturadesabores.junin.domain.exceptions.InssuficientPlatesException
 import com.mixturadesabores.junin.domain.repositories.OrdenRepository
+import java.util.*
 
-/**
- * Created by enzo on 02/07/17.
- */
-class Orden(var mesa: Mesa) {
+class Orden(var id: Int?, var hora: Date?, var estado: Boolean?) {
 
-    var id: Int? = null
-    var hora: Double? = null
-    var detalles: MutableList<DetalleOrden> = mutableListOf()
+    var detalles: MutableList<DetalleOrden> = mutableListOf<DetalleOrden>()
 
     fun registrar(ordenRepository: OrdenRepository) {
         val res = ordenRepository.create(this)
         id = res.id
         hora = res.hora
-        mesa.ocupar()
     }
 
-    fun agregarPlato(plato: Plato, cantidad: Int, observaciones: String) {
-        try {
-            plato.vender(cantidad)
-        } catch (e: InssuficientPlatesException) {
+    fun agregarDetalle(detalle: DetalleOrden) {
+        detalles.add(detalle)
+    }
 
+    fun cambiarDetalle(detalle: DetalleOrden) {
+        var index = 0
+        detalles.map {
+            if (it.id == detalle.id) {
+                index = detalles.indexOf(it)
+            }
         }
+        detalles.removeAt(index)
+        detalles.add(index, detalle)
     }
 
-    fun quitarPlato(detallePedidoId: Int) {
-        detalles.removeIf { detalleOrden -> detalleOrden.id == detallePedidoId }
+    fun quitarDetalle(detallePedidoId: Int) {
+        detalles = detalles.filter { it.id != detallePedidoId }.toMutableList()
     }
 
     fun obtenerDetalles(): List<DetalleOrden> {
         return detalles
     }
 
-    fun cerrarPedido() {
-        mesa.liberar()
+    fun cerrar() {
+        estado = false
     }
 }

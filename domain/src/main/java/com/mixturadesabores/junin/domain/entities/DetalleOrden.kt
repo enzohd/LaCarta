@@ -1,15 +1,12 @@
 package com.mixturadesabores.junin.domain.entities
 
-/**
- * Created by enzo on 02/07/17.
- */
-class DetalleOrden(val id: Int, val plato: Plato, var cantidad: Int, var observaciones: String) {
+class DetalleOrden(val id: Int?, val plato: Plato, var cantidad: Int, var nota: String?, var estado: String) {
 
-    var precio: Double = 0.0
-    var estado: String = ""
+    private val estados = listOf<String>("solicitado", "preparando", "servido")
 
     init {
-        precio = plato.precio * cantidad
-        estado = "Pedido"
+        if (!estados.contains(estado)) {
+            throw Exception("Estado de detalle no valido")
+        }
     }
 }
