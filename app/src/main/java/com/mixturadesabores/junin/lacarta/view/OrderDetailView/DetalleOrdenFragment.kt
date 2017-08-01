@@ -15,7 +15,6 @@ import com.mixturadesabores.junin.domain.entities.Mesa
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.domain.entities.Orden
 
-
 class DetalleOrdenFragment : Fragment() {
     private var mColumnCount = 1
     private var mListener: OnListFragmentInteractionListener? = null
@@ -31,7 +30,7 @@ class DetalleOrdenFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater!!.inflate(R.layout.fragment_detalleorden_list, container, false)
-        var orden: Orden = Orden(Mesa(1, 1, "Libre"))
+        var orden: Orden = Orden(null, null, null)
         // Set the adapter
         if (view is RecyclerView) {
             val context = view.getContext()
@@ -61,15 +60,6 @@ class DetalleOrdenFragment : Fragment() {
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
     interface OnListFragmentInteractionListener {
         fun onListFragmentInteraction(item: DetalleOrden)
     }

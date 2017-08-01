@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
 import android.graphics.Color
-import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.domain.entities.Mesa
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivity
@@ -45,10 +44,10 @@ class MesaAdapter(var context: Context, var mesas: MutableList<Mesa>): BaseAdapt
         }
         button.height = 140
         button.text = context.getString(R.string.button_table_text) + mesa.numero.toString()
-        if (mesa.estado == "libre") {
+        if (mesa.estaLibre()) {
             button.setBackgroundColor(Color.GREEN)
             button.setOnClickListener { context.startActivity(Intent(context, PlatosActivity::class.java)) }
-        } else if (mesa.estado == "ocupada") {
+        } else if (mesa.estaOcupado()) {
             button.setBackgroundColor(Color.YELLOW)
             button.setOnClickListener { context.startActivity(Intent(context, OrderActivity::class.java)) }
         }
