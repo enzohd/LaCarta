@@ -14,12 +14,12 @@ import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.databinding.ActivityMesasBinding
 import com.mixturadesabores.junin.lacarta.viewmodel.LevelViewModel
+import io.reactivex.functions.Consumer
 
-class MesasActivity : Activity(), LevelViewModel.MainActivityViewModel, ActionBar.TabListener {
+class MesasActivity : Activity() {
 
     private lateinit var activityMesasBinding: ActivityMesasBinding
     private lateinit var levelViewModel: LevelViewModel
-
     private lateinit var viewPager: ViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +32,7 @@ class MesasActivity : Activity(), LevelViewModel.MainActivityViewModel, ActionBa
         val actionBar = actionBar
         actionBar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
 
-        levelViewModel.fetchLevelList(this)
-
+        levelViewModel.fetchLevelList(fetchLevelsConsumer())
         viewPager = activityMesasBinding.container
     }
 
@@ -57,21 +56,10 @@ class MesasActivity : Activity(), LevelViewModel.MainActivityViewModel, ActionBa
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onTabSelected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {
-        // When the given tab is selected, switch to the corresponding page in
-        // the ViewPager.
-        viewPager!!.currentItem = tab.position
-    }
+    private inner class fetchLevelsConsumer: Consumer<List<Nivel>>, ActionBar.TabListener {
 
-    override fun onTabUnselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
-
-    override fun onTabReselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
-
-    override fun endCallProgress(any: Any?) {
-        if (any is Throwable) {
-            println("Error: " + any.message)
-        } else {
-            val adapter = NivelesPagerAdapter(fragmentManager, any as MutableList<Nivel>)
+        override fun accept(t: List<Nivel>) {
+            val adapter = NivelesPagerAdapter(fragmentManager, t)
             viewPager.adapter = adapter
 
             for (i in 0..adapter.count - 1) {
@@ -88,6 +76,15 @@ class MesasActivity : Activity(), LevelViewModel.MainActivityViewModel, ActionBa
                 }
             })
         }
+
+        override fun onTabSelected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {
+            viewPager.currentItem = tab.position
+        }
+
+        override fun onTabUnselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
+
+        override fun onTabReselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
+
     }
 
     override fun onDestroy() {
