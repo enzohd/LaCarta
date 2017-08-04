@@ -21,7 +21,7 @@ class NivelPageFragment(var nivel: Nivel): Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_mesas, container, false)
-        val gridview = rootView.findViewById(R.id.gridview_mesas) as GridView
+        val gridview = rootView.findViewById<GridView>(R.id.gridview_mesas)
         gridview.adapter = MesaAdapter(activity, nivel.mesas)
         return rootView
     }

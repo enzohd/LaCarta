@@ -39,8 +39,8 @@ class MyPlatoFavoritoRecyclerViewAdapter(private val mValues: List<Plato>, priva
         var mItem: Plato? = null
 
         init {
-            mNameView = mView.findViewById(R.id.text_name) as TextView
-            mPriceView = mView.findViewById(R.id.text_price) as TextView
+            mNameView = mView.findViewById<TextView>(R.id.text_name)
+            mPriceView = mView.findViewById<TextView>(R.id.text_price)
         }
 
         override fun toString(): String {

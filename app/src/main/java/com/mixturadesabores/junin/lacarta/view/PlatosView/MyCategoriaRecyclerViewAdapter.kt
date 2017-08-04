@@ -37,7 +37,7 @@ class MyCategoriaRecyclerViewAdapter(private val mValues: List<Categoria>, priva
         var mItem: Categoria? = null
 
         init {
-            mNameView = mView.findViewById(R.id.text_name_category) as TextView
+            mNameView = mView.findViewById<TextView>(R.id.text_name_category)
         }
 
         override fun toString(): String {

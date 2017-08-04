@@ -40,8 +40,8 @@ class MyDetalleOrdenRecyclerViewAdapter(private val mValues: List<DetalleOrden>,
         var mItem: DetalleOrden? = null
 
         init {
-            mIdView = mView.findViewById(R.id.text_quantity) as TextView
-            mContentView = mView.findViewById(R.id.text_name_plato) as TextView
+            mIdView = mView.findViewById<TextView>(R.id.text_quantity)
+            mContentView = mView.findViewById<TextView>(R.id.text_name_plato)
         }
 
         override fun toString(): String {
