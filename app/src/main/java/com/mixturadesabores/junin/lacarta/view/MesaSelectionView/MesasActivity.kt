@@ -1,12 +1,12 @@
 package com.mixturadesabores.junin.lacarta.view.MesaSelectionView
 
-import android.app.Activity
-import android.app.ActionBar
-import android.app.FragmentTransaction
+import android.support.v7.app.AppCompatActivity
+import android.content.Context
 import android.databinding.DataBindingUtil
 
 import android.support.v4.view.ViewPager
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.view.Menu
 import android.view.MenuItem
 import com.mixturadesabores.junin.domain.entities.Nivel
@@ -15,12 +15,14 @@ import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.databinding.ActivityMesasBinding
 import com.mixturadesabores.junin.lacarta.viewmodel.LevelViewModel
 import io.reactivex.functions.Consumer
+import kotlinx.android.synthetic.main.activity_mesas.*
 
-class MesasActivity : Activity() {
+class MesasActivity : AppCompatActivity() {
 
     private lateinit var activityMesasBinding: ActivityMesasBinding
     private lateinit var levelViewModel: LevelViewModel
     private lateinit var viewPager: ViewPager
+    private lateinit var slidingTab: TabLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +31,9 @@ class MesasActivity : Activity() {
         levelViewModel = LevelViewModel(this)
         activityMesasBinding.mainViewModel = levelViewModel
 
-        val actionBar = actionBar
-        actionBar!!.navigationMode = ActionBar.NAVIGATION_MODE_TABS
-
-        levelViewModel.fetchLevelList(fetchLevelsConsumer())
+        levelViewModel.fetchLevelList(fetchLevelsConsumer(this))
         viewPager = activityMesasBinding.container
+        slidingTab = activityMesasBinding.tabs
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,35 +56,13 @@ class MesasActivity : Activity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private inner class fetchLevelsConsumer: Consumer<List<Nivel>>, ActionBar.TabListener {
+    private inner class fetchLevelsConsumer(val context: Context): Consumer<List<Nivel>> {
 
         override fun accept(t: List<Nivel>) {
-            val adapter = NivelesPagerAdapter(fragmentManager, t)
+            val adapter = NivelesPagerAdapter(fragmentManager, t, context)
             viewPager.adapter = adapter
-
-            for (i in 0..adapter.count - 1) {
-                actionBar.addTab(
-                        actionBar.newTab()
-                                .setText(getString(R.string.tab_level_title) + adapter.getPageTitle(i))
-                                .setTabListener(this)
-                )
-            }
-
-            viewPager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener(){
-                override fun onPageSelected(position: Int) {
-                    actionBar.setSelectedNavigationItem(position)
-                }
-            })
+            slidingTab.setupWithViewPager(viewPager)
         }
-
-        override fun onTabSelected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {
-            viewPager.currentItem = tab.position
-        }
-
-        override fun onTabUnselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
-
-        override fun onTabReselected(tab: ActionBar.Tab, fragmentTransaction: FragmentTransaction) {}
-
     }
 
     override fun onDestroy() {

@@ -45,10 +45,10 @@ class MesaAdapter(var context: Context, var mesas: MutableList<Mesa>): BaseAdapt
         button.height = 140
         button.text = context.getString(R.string.button_table_text) + mesa.numero.toString()
         if (mesa.estaLibre()) {
-            button.setBackgroundColor(Color.GREEN)
+            button.setBackgroundColor(context.resources.getColor(R.color.colorFreeTable))
             button.setOnClickListener { context.startActivity(Intent(context, PlatosActivity::class.java)) }
         } else if (mesa.estaOcupado()) {
-            button.setBackgroundColor(Color.YELLOW)
+            button.setBackgroundColor(context.resources.getColor(R.color.colorBusyTable))
             button.setOnClickListener { context.startActivity(Intent(context, OrderActivity::class.java)) }
         }
         return button
