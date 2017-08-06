@@ -7,7 +7,7 @@ import com.mixturadesabores.junin.lacarta.data.ApiNivelRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import io.reactivex.functions.Consumer
+import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
 
 class LevelViewModel(val context: Context) {
@@ -25,13 +25,13 @@ class LevelViewModel(val context: Context) {
 
     protected fun manageSub(s: Disposable) = compoSub.add(s)
 
-    fun fetchLevelList(consumer: Consumer<List<Nivel>>) {
+    fun fetchLevelList(disposableObserver: DisposableObserver<List<Nivel>>) {
 
         manageSub(
                 obtenerNivelesUseCase.execute()
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(consumer)
+                        .subscribeWith(disposableObserver)
         )
     }
 

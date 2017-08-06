@@ -14,7 +14,7 @@ import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.databinding.ActivityMesasBinding
 import com.mixturadesabores.junin.lacarta.viewmodel.LevelViewModel
-import io.reactivex.functions.Consumer
+import io.reactivex.observers.DisposableObserver
 import kotlinx.android.synthetic.main.activity_mesas.*
 
 class MesasActivity : AppCompatActivity() {
@@ -56,12 +56,19 @@ class MesasActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private inner class fetchLevelsConsumer(val context: Context): Consumer<List<Nivel>> {
-
-        override fun accept(t: List<Nivel>) {
+    private inner class fetchLevelsConsumer(val context: Context): DisposableObserver<List<Nivel>>() {
+        override fun onNext(t: List<Nivel>) {
             val adapter = NivelesPagerAdapter(fragmentManager, t, context)
             viewPager.adapter = adapter
             slidingTab.setupWithViewPager(viewPager)
+        }
+
+        override fun onComplete() {
+
+        }
+
+        override fun onError(e: Throwable) {
+            // TODO: implement show a message for the user
         }
     }
 

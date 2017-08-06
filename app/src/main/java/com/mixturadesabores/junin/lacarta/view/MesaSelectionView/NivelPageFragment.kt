@@ -2,18 +2,13 @@ package com.mixturadesabores.junin.lacarta.view.MesaSelectionView
 
 import android.annotation.SuppressLint
 import android.app.Fragment
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.GridView
-import android.widget.Toast
 import com.mixturadesabores.junin.domain.entities.Nivel
 import com.mixturadesabores.junin.lacarta.R
-import com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivity
 
 @SuppressLint("ValidFragment")
 class NivelPageFragment(var nivel: Nivel): Fragment() {

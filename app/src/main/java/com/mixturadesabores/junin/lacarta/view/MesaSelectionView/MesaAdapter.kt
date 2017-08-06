@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Button
-import android.graphics.Color
 import com.mixturadesabores.junin.domain.entities.Mesa
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivity
