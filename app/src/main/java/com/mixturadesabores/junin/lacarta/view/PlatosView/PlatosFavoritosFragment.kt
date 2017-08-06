@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.app.Fragment
-import android.support.v7.widget.GridLayoutManager
+import android.databinding.DataBindingUtil
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -12,52 +12,34 @@ import android.view.View
 import android.view.ViewGroup
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.domain.entities.Plato
-import com.mixturadesabores.junin.domain.interactors.ObtenerPlatosFrecuentesUseCase
-import com.mixturadesabores.junin.lacarta.data.ApiPlatoRepository
-import io.reactivex.schedulers.Schedulers
-
+import com.mixturadesabores.junin.lacarta.databinding.FragmentPlatosFavoritosListBinding
+import com.mixturadesabores.junin.lacarta.viewmodel.FavoritePlateViewModel
+import io.reactivex.observers.DisposableObserver
 
 class PlatosFavoritosFragment : Fragment() {
 
-    private var mColumnCount = 1
+    private lateinit var fragmentPlatosFavoritosListBinding: FragmentPlatosFavoritosListBinding
+    private lateinit var favoritePlateViewModel: FavoritePlateViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: MyPlatoFavoritoRecyclerViewAdapter
     private var mListener: OnListFragmentInteractionListener? = null
-    private val apiPlatoRepository by lazy { ApiPlatoRepository() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (arguments != null) {
-            mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
-        }
+        adapter = MyPlatoFavoritoRecyclerViewAdapter(listOf<Plato>(), mListener)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_platos_favoritos_list, container, false)
-
-        // Set the adapter
-        val suscription = ObtenerPlatosFrecuentesUseCase(apiPlatoRepository).execute()
-                .subscribeOn(Schedulers.io())
-                .subscribe(
-                        {
-                            if (view is RecyclerView) {
-                                val context = view.getContext()
-                                val recyclerView = view
-                                if (mColumnCount <= 1) {
-                                    recyclerView.layoutManager = LinearLayoutManager(context)
-                                } else {
-                                    recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
-                                }
-                                recyclerView.adapter = MyPlatoFavoritoRecyclerViewAdapter(it, mListener)
-                            }
-                        },
-                        {
-                            error -> Throwable(error.message)
-                        }
-                )
-        return view
+        fragmentPlatosFavoritosListBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_platos_favoritos_list, container, false)
+        favoritePlateViewModel = FavoritePlateViewModel()
+        fragmentPlatosFavoritosListBinding.favoritePlatesViewModel = favoritePlateViewModel
+        recyclerView = fragmentPlatosFavoritosListBinding.list
+        recyclerView.layoutManager = LinearLayoutManager(fragmentPlatosFavoritosListBinding.root.context)
+        recyclerView.adapter = adapter
+        favoritePlateViewModel.fetchFavoritePlates(fetchFavoritePlatesObserver())
+        return fragmentPlatosFavoritosListBinding.root
     }
-
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -82,15 +64,22 @@ class PlatosFavoritosFragment : Fragment() {
         mListener = null
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     *
-     *
-     * See the Android Training lesson [Communicating with Other Fragments](http://developer.android.com/training/basics/fragments/communicating.html) for more information.
-     */
+    private inner class fetchFavoritePlatesObserver(): DisposableObserver<List<Plato>>() {
+        override fun onComplete() {
+
+        }
+
+        override fun onNext(t: List<Plato>) {
+            adapter.mValues = t
+            adapter.notifyDataSetChanged()
+        }
+
+        override fun onError(e: Throwable) {
+            println("holo")
+        }
+
+    }
+
     interface OnListFragmentInteractionListener {
 
         fun onListFragmentInteraction(item: Plato)
