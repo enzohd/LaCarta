@@ -23,11 +23,11 @@
         <activity
             android:name=".view.OrderDetailView.OrderActivity"
             android:label="@string/title_activity_order"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppThemeMaterial" />
         <activity
             android:name=".view.PlatosView.PlatosActivity"
             android:label="@string/title_activity_platos"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppThemeMaterial"></activity>
     </application>
 
 </manifest>

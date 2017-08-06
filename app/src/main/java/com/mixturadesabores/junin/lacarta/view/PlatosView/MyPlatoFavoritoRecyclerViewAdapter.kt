@@ -10,8 +10,7 @@ import com.mixturadesabores.junin.domain.entities.Plato
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.view.PlatosView.PlatosFavoritosFragment.OnListFragmentInteractionListener
 
-
-class MyPlatoFavoritoRecyclerViewAdapter(private val mValues: List<Plato>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<MyPlatoFavoritoRecyclerViewAdapter.ViewHolder>() {
+class MyPlatoFavoritoRecyclerViewAdapter(var mValues: List<Plato>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<MyPlatoFavoritoRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
