@@ -31,7 +31,7 @@ class MesasActivity : AppCompatActivity() {
         levelViewModel = LevelViewModel(this)
         activityMesasBinding.mainViewModel = levelViewModel
 
-        levelViewModel.fetchLevelList(fetchLevelsConsumer(this))
+        levelViewModel.fetchLevelList(fetchLevelsObserver(this))
         viewPager = activityMesasBinding.container
         slidingTab = activityMesasBinding.tabs
     }
@@ -56,7 +56,7 @@ class MesasActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private inner class fetchLevelsConsumer(val context: Context): DisposableObserver<List<Nivel>>() {
+    private inner class fetchLevelsObserver(val context: Context): DisposableObserver<List<Nivel>>() {
         override fun onNext(t: List<Nivel>) {
             val adapter = NivelesPagerAdapter(fragmentManager, t, context)
             viewPager.adapter = adapter

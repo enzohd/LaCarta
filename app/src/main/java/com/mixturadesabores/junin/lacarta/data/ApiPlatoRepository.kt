@@ -9,9 +9,6 @@ import io.reactivex.Observable
 import retrofit2.Call
 import retrofit2.Callback
 
-/**
- * Created by enzo on 10/07/17.
- */
 class ApiPlatoRepository(): RestApi(), PlatoRepository {
 
     override fun getFavorites(): Observable<List<Plato>> {
