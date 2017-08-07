@@ -3,6 +3,7 @@ package com.mixturadesabores.junin.lacarta.view.PlatosView
 import android.content.Context
 import android.os.Bundle
 import android.app.Fragment
+import android.databinding.DataBindingUtil
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -12,18 +13,22 @@ import android.view.ViewGroup
 
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.domain.entities.Categoria
-import com.mixturadesabores.junin.domain.interactors.ObtenerListadoCategoriasUseCase
-import com.mixturadesabores.junin.lacarta.data.ApiCategoriaRepository
-import io.reactivex.schedulers.Schedulers
-
+import com.mixturadesabores.junin.lacarta.databinding.FragmentCategoriaListBinding
+import com.mixturadesabores.junin.lacarta.viewmodel.CategoriesViewModel
+import io.reactivex.observers.DisposableObserver
 
 class CategoriaFragment : Fragment() {
+
+    private lateinit var fragmentCategoriaListBinding: FragmentCategoriaListBinding
+    private lateinit var categoriesViewModel: CategoriesViewModel
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: MyCategoriaRecyclerViewAdapter
     private var mColumnCount = 3
     private var mListener: OnListFragmentInteractionListener? = null
-    private val apiCategoriaRepository by lazy { ApiCategoriaRepository() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        adapter = MyCategoriaRecyclerViewAdapter(listOf<Categoria>(), mListener)
 
         if (arguments != null) {
             mColumnCount = arguments.getInt(ARG_COLUMN_COUNT)
@@ -32,30 +37,18 @@ class CategoriaFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater!!.inflate(R.layout.fragment_categoria_list, container, false)
-
-        // Set the adapter
-        if (view is RecyclerView) {
-            val context = view.getContext()
-            val recyclerView = view
-            if (mColumnCount <= 1) {
-                recyclerView.layoutManager = LinearLayoutManager(context)
-            } else {
-                recyclerView.layoutManager = GridLayoutManager(context, mColumnCount)
-            }
-
-            val suscription = ObtenerListadoCategoriasUseCase(apiCategoriaRepository).execute()
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(
-                            {
-                                categorias -> recyclerView.adapter = MyCategoriaRecyclerViewAdapter(categorias, mListener)
-                            },
-                            {
-                                error -> Throwable(error.message)
-                            }
-                    )
+        fragmentCategoriaListBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_categoria_list, container, false)
+        categoriesViewModel = CategoriesViewModel()
+        fragmentCategoriaListBinding.categoriesViewModel = categoriesViewModel
+        recyclerView = fragmentCategoriaListBinding.list
+        if (mColumnCount <= 1) {
+            recyclerView.layoutManager = LinearLayoutManager(fragmentCategoriaListBinding.root.context)
+        } else {
+            recyclerView.layoutManager = GridLayoutManager(fragmentCategoriaListBinding.root.context, mColumnCount)
         }
-        return view
+        recyclerView.adapter = adapter
+        categoriesViewModel.fetchCategories(fetchCategoriesObserver())
+        return fragmentCategoriaListBinding.root
     }
 
 
@@ -71,6 +64,21 @@ class CategoriaFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         mListener = null
+    }
+
+    private inner class fetchCategoriesObserver(): DisposableObserver<List<Categoria>>() {
+        override fun onComplete() {
+
+        }
+
+        override fun onNext(t: List<Categoria>) {
+            adapter.mValues = t
+            adapter.notifyDataSetChanged()
+        }
+
+        override fun onError(e: Throwable) {
+            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        }
     }
 
     interface OnListFragmentInteractionListener {

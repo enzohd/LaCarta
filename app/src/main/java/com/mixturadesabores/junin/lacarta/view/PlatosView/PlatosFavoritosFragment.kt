@@ -75,7 +75,7 @@ class PlatosFavoritosFragment : Fragment() {
         }
 
         override fun onError(e: Throwable) {
-            println("holo")
+            TODO("not implemented")
         }
 
     }
