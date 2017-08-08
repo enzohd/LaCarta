@@ -10,14 +10,18 @@
             type="com.mixturadesabores.junin.lacarta.viewmodel.FavoritePlateViewModel"/>
     </data>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.mixturadesabores.junin.lacarta.view.PlatosView.PlatosFavoritosFragment"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/fragment_plato_favorito" />
+        android:layout_height="wrap_content"
+        android:elevation="8dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.mixturadesabores.junin.lacarta.view.PlatosView.PlatosFavoritosFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/fragment_plato_favorito" />
+    </android.support.v7.widget.CardView>
 </layout>
 
