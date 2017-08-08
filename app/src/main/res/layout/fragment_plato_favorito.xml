@@ -3,25 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/plato_card"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:elevation="8dp">
-
+    android:layout_height="@dimen/favorite_plate_item_height">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="@dimen/favorite_plate_item_padding"
+        android:paddingRight="@dimen/favorite_plate_item_padding">
 
         <TextView
             android:id="@+id/text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="15dp"
-            android:textSize="20sp" />
+            android:layout_marginBottom="10dp"
+            android:textSize="@dimen/favorite_plate_item_name" />
 
         <TextView
             android:id="@+id/price_sign"
@@ -31,7 +29,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
-            android:textSize="15sp"
+            android:textSize="@dimen/favorite_plate_item_price"
             android:text="@string/money_sign" />
 
         <TextView
@@ -40,16 +38,14 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_name"
             android:layout_toRightOf="@+id/price_sign"
-            android:textSize="15sp" />
+            android:textSize="@dimen/favorite_plate_item_price" />
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@color/colorPrimary"
+            android:layout_width="@dimen/favorite_plate_image_width"
+            android:layout_height="@dimen/favorite_plate_image_height"
+            android:src="@color/colorAccent"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true" />
-
-
     </RelativeLayout>
 </android.support.v7.widget.CardView>

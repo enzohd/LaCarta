@@ -10,18 +10,29 @@
             type="com.mixturadesabores.junin.lacarta.viewmodel.CategoriesViewModel"/>
     </data>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/list_categories_title"/>
+        android:layout_margin="@dimen/basic_margin"
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
-        android:name="com.mixturadesabores.junin.lacarta.view.PlatosView.CategoriaFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
-        tools:listitem="@layout/fragment_categoria" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:text="@string/list_categories_title"
+            android:textAlignment="center"
+            android:textColor="@color/colorTextAccent"
+            android:textSize="@dimen/text_title" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/list"
+            android:name="com.mixturadesabores.junin.lacarta.view.PlatosView.CategoriaFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/fragment_categoria" />
+    </LinearLayout>
 </layout>
