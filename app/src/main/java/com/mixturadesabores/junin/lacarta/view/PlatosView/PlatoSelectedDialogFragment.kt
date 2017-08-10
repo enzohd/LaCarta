@@ -4,17 +4,13 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.app.DialogFragment
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 
 import com.mixturadesabores.junin.lacarta.R
+import com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivity
 
-/**
- * Created by enzo on 18/07/17.
- */
 class PlatoSelectedDialogFragment : DialogFragment() {
 
     var platoName = ""
@@ -39,7 +35,11 @@ class PlatoSelectedDialogFragment : DialogFragment() {
         builder.setView(mInflater.inflate(R.layout.fragment_plato_selected_dialog, null))
                 .setTitle(title)
                 .setPositiveButton(R.string.alert_dialog_ok,
-                        DialogInterface.OnClickListener { dialog, which -> Log.v("positive", "click on positive button") })
+                        DialogInterface.OnClickListener { dialog, which ->
+                            var intent = Intent(activity, OrderActivity::class.java)
+                            intent.putExtra("orderId", 1)
+                            startActivity(intent)
+                        })
                 .setNegativeButton(R.string.alert_dialog_cancel,
                         DialogInterface.OnClickListener { dialog, which -> Log.v("negative", "click on negative button") })
 

@@ -12,7 +12,6 @@ import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivity
 import com.mixturadesabores.junin.lacarta.view.PlatosView.PlatosActivity
 
-
 class MesaAdapter(var context: Context, var mesas: MutableList<Mesa>): BaseAdapter() {
 
     val mInflator: LayoutInflater
@@ -48,7 +47,11 @@ class MesaAdapter(var context: Context, var mesas: MutableList<Mesa>): BaseAdapt
             button.setOnClickListener { context.startActivity(Intent(context, PlatosActivity::class.java)) }
         } else if (mesa.estaOcupado()) {
             button.setBackgroundColor(context.resources.getColor(R.color.colorBusyTable))
-            button.setOnClickListener { context.startActivity(Intent(context, OrderActivity::class.java)) }
+            button.setOnClickListener {
+                val intent = Intent(context, OrderActivity::class.java)
+                intent.putExtra("orderId", 1)
+                context.startActivity(intent)
+            }
         }
         return button
     }
