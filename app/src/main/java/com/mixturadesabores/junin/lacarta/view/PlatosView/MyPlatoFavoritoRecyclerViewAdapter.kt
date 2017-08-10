@@ -24,7 +24,7 @@ class MyPlatoFavoritoRecyclerViewAdapter(var mValues: List<Plato>, private val m
         holder.mPriceView.text = mValues[position].precio.toString()
 
         holder.mView.setOnClickListener {
-            mListener?.onListFragmentInteraction(mValues.get(position))
+            mListener?.onListFragmentInteraction(holder.mItem!!)
         }
     }
 

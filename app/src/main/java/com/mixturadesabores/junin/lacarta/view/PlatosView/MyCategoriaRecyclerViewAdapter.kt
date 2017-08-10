@@ -10,7 +10,6 @@ import com.mixturadesabores.junin.domain.entities.Categoria
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.lacarta.view.PlatosView.CategoriaFragment.OnListFragmentInteractionListener
 
-
 class MyCategoriaRecyclerViewAdapter(var mValues: List<Categoria>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<MyCategoriaRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,9 +22,9 @@ class MyCategoriaRecyclerViewAdapter(var mValues: List<Categoria>, private val m
         holder.mItem = mValues[position]
         holder.mNameView.text = mValues[position].nombre
 
-        /*holder.mView.setOnClickListener {
-            mListener?.onListFragmentInteraction(holder.mItem)
-        }*/
+        holder.mView.setOnClickListener {
+            mListener?.onListFragmentInteraction(holder.mItem!!)
+        }
     }
 
     override fun getItemCount(): Int {
