@@ -9,7 +9,7 @@ import android.widget.TextView
 import com.mixturadesabores.junin.lacarta.R
 import com.mixturadesabores.junin.domain.entities.DetalleOrden
 
-import com.mixturadesabores.junin.lacarta.view.OrderDetailView.DetalleOrdenFragment.OnListFragmentInteractionListener
+import com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivity.OnListFragmentInteractionListener
 
 
 class MyDetalleOrdenRecyclerViewAdapter(private val mValues: List<DetalleOrden>, private val mListener: OnListFragmentInteractionListener?) : RecyclerView.Adapter<MyDetalleOrdenRecyclerViewAdapter.ViewHolder>() {
@@ -25,9 +25,9 @@ class MyDetalleOrdenRecyclerViewAdapter(private val mValues: List<DetalleOrden>,
         holder.mIdView.text = mValues[position].cantidad.toString()
         holder.mContentView.text = mValues[position].plato.nombre
 
-        /*holder.mView.setOnClickListener {
-            mListener?.onListFragmentInteraction(holder.mItem)
-        }*/
+        holder.mView.setOnClickListener {
+            mListener?.onListFragmentInteraction(holder.mItem!!)
+        }
     }
 
     override fun getItemCount(): Int {

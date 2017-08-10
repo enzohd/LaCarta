@@ -1,21 +1,76 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+<?xml version="1.0" encoding="utf-8"?>
 
-    <fragment
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/fragment"
-        android:name="com.mixturadesabores.junin.lacarta.view.OrderDetailView.OrderActivityFragment"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="orderViewModel"
+            type="com.mixturadesabores.junin.lacarta.viewmodel.OrderViewModel" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/fragment_order" />
+        android:padding="@dimen/basic_padding">
 
-    <fragment
-        android:id="@+id/fragment3"
-        android:name="com.mixturadesabores.junin.lacarta.view.OrderDetailView.DetalleOrdenFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-</LinearLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/order_header">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/order_header_height"
+                android:background="@color/colorPrimaryDark">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/hour_tag"
+                    android:textSize="@dimen/order_header_text"
+                    android:id="@+id/textView4"
+                    android:layout_marginLeft="138dp"
+                    android:layout_marginStart="138dp"
+                    android:layout_alignBaseline="@+id/text_order_id"
+                    android:layout_alignBottom="@+id/text_order_id"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/order_header_text"
+                    android:text="@{orderViewModel.orderDate}"
+                    android:id="@+id/text_order_id"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@+id/textView4"
+                    android:layout_toEndOf="@+id/textView4"
+                    android:layout_marginBottom="21dp" />
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/order_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/order_header"
+            app:layout_constraintVertical_bias="0.0">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:name="com.mixturadesabores.junin.lacarta.view.OrderDetailView.DetalleOrdenFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layoutManager="LinearLayoutManager"
+                tools:context="com.mixturadesabores.junin.lacarta.view.OrderDetailView.DetalleOrdenFragment"
+                tools:listitem="@layout/fragment_detalleorden"/>
+        </android.support.v7.widget.CardView>
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
 
