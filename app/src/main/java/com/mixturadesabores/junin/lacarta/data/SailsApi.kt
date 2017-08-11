@@ -3,12 +3,11 @@ package com.mixturadesabores.junin.lacarta.data
 import com.mixturadesabores.junin.lacarta.data.models.PlatoOfCartaApi
 import com.mixturadesabores.junin.lacarta.data.models.CategoriaApi
 import com.mixturadesabores.junin.lacarta.data.models.MesaApi
+import com.mixturadesabores.junin.lacarta.data.models.OrderApi
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 
-/**
- * Created by Enzo Huaricapcha on 12/07/2017.
- */
 interface SailsApi {
 
     @GET("/carta")
@@ -19,4 +18,7 @@ interface SailsApi {
 
     @GET("/mesa")
     fun getTables(): Call<List<MesaApi>>
+
+    @GET("pedido/{orderId}")
+    fun getOrder(@Path("orderId") orderId: Int): Call<OrderApi>
 }
